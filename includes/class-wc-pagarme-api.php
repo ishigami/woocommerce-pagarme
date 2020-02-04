@@ -265,7 +265,7 @@ class WC_Pagarme_API {
 		}
 
 		// Address.
-		if ( ! empty( $order->billing_address_1 ) ) {
+		if ( ! empty( $order->get_billing_address_1() ) ) {
 			$data['customer']['address'] = array(
 				'street'        => $order->get_billing_address_1(),
 				'complementary' => $order->get_billing_address_2(),
