@@ -246,8 +246,8 @@ class WC_Pagarme_API {
 			'amount'       => $order->get_total() * 100,
 			'postback_url' => WC()->api_request_url( get_class( $this->gateway ) ),
 			'customer'     => array(
-				'name'  => trim( $order->billing_first_name . ' ' . $order->billing_last_name ),
-				'email' => $order->billing_email,
+			'name'  => trim( $order->get_billing_first_name() . ' ' . $order->get_billing_last_name() ),
+				'email' => $order->get_billing_email(),
 			),
 			'metadata'     => array(
 				'order_number' => $order->get_order_number(),
@@ -255,8 +255,8 @@ class WC_Pagarme_API {
 		);
 
 		// Phone.
-		if ( ! empty( $order->billing_phone ) ) {
-			$phone = $this->only_numbers( $order->billing_phone );
+		if ( ! empty( $order->get_billing_phone() ) ) {
+			$phone = $this->only_numbers( $order->get_billing_phone() );
 
 			$data['customer']['phone'] = array(
 				'ddd'    => substr( $phone, 0, 2 ),
@@ -267,9 +267,9 @@ class WC_Pagarme_API {
 		// Address.
 		if ( ! empty( $order->billing_address_1 ) ) {
 			$data['customer']['address'] = array(
-				'street'        => $order->billing_address_1,
-				'complementary' => $order->billing_address_2,
-				'zipcode'       => $this->only_numbers( $order->billing_postcode ),
+				'street'        => $order->get_billing_address_1(),
+				'complementary' => $order->get_billing_address_2(),
+				'zipcode'       => $this->only_numbers( $order->get_billing_postcode() ),
 			);
 
 			// Non-WooCommerce default address fields.
